@@ -1,3 +1,4 @@
+MAX_WAGA = 30
 
 def pokaz_przedmioty(ekwipunek):
     print("\nTwoje przedmioty:")
@@ -7,6 +8,16 @@ def pokaz_przedmioty(ekwipunek):
         else:
             dane = ekwipunek[przedmiot]
             print(przedmiot, "-", dane["ilosc"])
+
+def oblicz_wage(ekwipunek):
+    waga = 0
+
+    for przedmiot in ekwipunek:
+        if przedmiot != "zloto":
+            dane = ekwipunek[przedmiot]
+            waga += dane["ilosc"] * dane["waga"]
+
+    return waga
 
 def wybierz_przedmiot(komunikat):
     print(komunikat)
@@ -31,7 +42,7 @@ def kup_przedmiot(ekwipunek, przedmiot, cena):
             del ekwipunek["zloto"]
 
         if przedmiot in ekwipunek:
-            ekwipunek[przedmiot] += 1
+            ekwipunek[przedmiot]["ilosc"] += 1
         else:
             ekwipunek[przedmiot] = {
                 "ilosc": 1,
