@@ -36,22 +36,66 @@ def kup_przedmiot(ekwipunek, przedmiot, cena):
     else:
         print("Nie masz wystarczającej ilości złota!")
 
-
-def sklep(ekwipunek):
-    print("\nSklep 'Szop'")
-    print("Co chcesz kupić?")
-    print("1 - Miecz (20 złota)")
-    print("2 - Mikstura (5 złota)")
-    print("3 - Wyjdź ze sklepu")
+def sprzedaj_przedmiot(ekwipunek):
+    print("\nCo chcesz sprzedać?")
+    print("1 - Miecz (10 złota)")
+    print("2 - Mikstura (2 złota)")
+    print("3 - Powrót")
 
     wybor = input("\nWybierz przedmiot: ")
 
     if wybor == "1":
-        kup_przedmiot(ekwipunek, "miecz", 20)
+        przedmiot = "miecz"
+        cena = 10
     elif wybor == "2":
-        kup_przedmiot(ekwipunek, "mikstura", 5)
+        przedmiot = "mikstura"
+        cena = 2
+    elif wybor == "3":
+        return
+    else:
+        print("Nie ma takiej opcji!")
+        return
+
+    if przedmiot in ekwipunek and ekwipunek[przedmiot] > 0:
+        ekwipunek[przedmiot] -= 1
+        ekwipunek["zloto"] = ekwipunek.get("zloto", 0) + cena
+
+        if ekwipunek[przedmiot] <= 0:
+            del ekwipunek[przedmiot]
+
+        print("Sprzedano przedmiot!")
+        print("Otrzymano", cena, "złota!")
+    else:
+        print("Nie masz takiego przedmiotu!")
+    
+def sklep(ekwipunek):
+    print("\nSklep 'Szop'")
+    print("1. Kup przedmiot")
+    print("2. Sprzedaj przedmiot")
+    print("3. Wyjdź ze sklepu")
+
+    wybor = input("\nWybierz opcję: ")
+
+    if wybor == "1":
+        print("\nCo chcesz kupić?")
+        print("1 - Miecz (20 złota)")
+        print("2 - Mikstura (5 złota)")
+
+        zakup = input("\nWybierz przedmiot: ")
+
+        if zakup == "1":
+            kup_przedmiot(ekwipunek, "miecz", 20)
+        elif zakup == "2":
+            kup_przedmiot(ekwipunek, "mikstura", 5)
+        else:
+            print("Nie ma takiej opcji!")
+
+    elif wybor == "2":
+        sprzedaj_przedmiot(ekwipunek)
+
     elif wybor == "3":
         print("Wychodzisz ze sklepu...")
+
     else:
         print("Nie ma takiej opcji!")
 
