@@ -135,9 +135,17 @@ def sprawdz_przedmiot(ekwipunek):
 
 def menu():
     ekwipunek = {
-        "miecz": 1,
-        "mikstura": 3,
-        "zloto": 50
+    "miecz": {
+        "ilosc": 1,
+        "waga": 7,
+        "wartosc": 20
+    },
+    "mikstura": {
+        "ilosc": 3,
+        "waga": 2,
+        "wartosc": 5
+    },
+    "zloto": 50
     }
 
     while True:
