@@ -2,8 +2,11 @@
 def pokaz_przedmioty(ekwipunek):
     print("\nTwoje przedmioty:")
     for przedmiot in ekwipunek:
-        print(przedmiot, "-", ekwipunek[przedmiot])
-
+        if przedmiot == "zloto":
+            print("Złoto -", ekwipunek[przedmiot])
+        else:
+            dane = ekwipunek[przedmiot]
+            print(przedmiot, "-", dane["ilosc"])
 
 def wybierz_przedmiot(komunikat):
     print(komunikat)
