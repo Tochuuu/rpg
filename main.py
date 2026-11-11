@@ -8,6 +8,7 @@ def pokaz_przedmioty(ekwipunek):
         else:
             dane = ekwipunek[przedmiot]
             print(przedmiot, "-", dane["ilosc"])
+    print(f"\nWaga ekwipunku: {oblicz_wage(ekwipunek)}/{MAX_WAGA}")
 
 def oblicz_wage(ekwipunek):
     waga = 0
@@ -34,7 +35,11 @@ def wybierz_przedmiot(komunikat):
         return None
 
 
-def kup_przedmiot(ekwipunek, przedmiot, cena):
+def kup_przedmiot(ekwipunek, przedmiot, cena, waga):
+    if oblicz_wage(ekwipunek) + waga > MAX_WAGA:
+        print("Nie masz wystarczająco miejsca w ekwipunku!")
+        return
+
     if ekwipunek.get("zloto", 0) >= cena:
         ekwipunek["zloto"] -= cena
 
