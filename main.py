@@ -20,20 +20,40 @@ def wybierz_przedmiot(komunikat):
         return None
 
 
-def dodaj_przedmiot(ekwipunek):
-    przedmiot = wybierz_przedmiot(
-        "Jaki przedmiot chcesz dodać?: \n1 - Miecz\n2 - Mikstura\n3 - Złoto"
-    )
+def kup_przedmiot(ekwipunek, przedmiot, cena):
+    if ekwipunek.get("zloto", 0) >= cena:
+        ekwipunek["zloto"] -= cena
 
-    if przedmiot is None:
-        return
+        if ekwipunek["zloto"] == 0:
+            del ekwipunek["zloto"]
 
-    if przedmiot in ekwipunek:
-        ekwipunek[przedmiot] += 1
+        if przedmiot in ekwipunek:
+            ekwipunek[przedmiot] += 1
+        else:
+            ekwipunek[przedmiot] = 1
+
+        print("Zakupiono przedmiot!")
     else:
-        ekwipunek[przedmiot] = 1
+        print("Nie masz wystarczającej ilości złota!")
 
-    print("Dodano przedmiot!")
+
+def sklep(ekwipunek):
+    print("\nSklep 'Szop'")
+    print("Co chcesz kupić?")
+    print("1 - Miecz (20 złota)")
+    print("2 - Mikstura (5 złota)")
+    print("3 - Wyjdź ze sklepu")
+
+    wybor = input("\nWybierz przedmiot: ")
+
+    if wybor == "1":
+        kup_przedmiot(ekwipunek, "miecz", 20)
+    elif wybor == "2":
+        kup_przedmiot(ekwipunek, "mikstura", 5)
+    elif wybor == "3":
+        print("Wychodzisz ze sklepu...")
+    else:
+        print("Nie ma takiej opcji!")
 
 
 def uzyj_przedmiot(ekwipunek):
@@ -78,7 +98,7 @@ def menu():
 
     while True:
         print("\n1. Pokaż przedmioty")
-        print("2. Dodaj przedmiot")
+        print("2. Idź do sklepu")
         print("3. Użyj przedmiotu")
         print("4. Sprawdź przedmiot")
         print("5. Wyjdź")
@@ -98,7 +118,7 @@ def menu():
             pokaz_przedmioty(ekwipunek)
 
         elif wybor == 2:
-            dodaj_przedmiot(ekwipunek)
+            sklep(ekwipunek)
 
         elif wybor == 3:
             uzyj_przedmiot(ekwipunek)
