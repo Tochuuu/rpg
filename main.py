@@ -33,7 +33,11 @@ def kup_przedmiot(ekwipunek, przedmiot, cena):
         if przedmiot in ekwipunek:
             ekwipunek[przedmiot] += 1
         else:
-            ekwipunek[przedmiot] = 1
+            ekwipunek[przedmiot] = {
+                "ilosc": 1,
+                "waga": waga,
+                "wartosc": cena
+            }
 
         print("Zakupiono przedmiot!")
     else:
@@ -59,11 +63,11 @@ def sprzedaj_przedmiot(ekwipunek):
         print("Nie ma takiej opcji!")
         return
 
-    if przedmiot in ekwipunek and ekwipunek[przedmiot] > 0:
-        ekwipunek[przedmiot] -= 1
+    if przedmiot in ekwipunek:
+        ekwipunek[przedmiot]["ilosc"] -= 1
         ekwipunek["zloto"] = ekwipunek.get("zloto", 0) + cena
 
-        if ekwipunek[przedmiot] <= 0:
+        if ekwipunek[przedmiot]["ilosc"] <= 0:
             del ekwipunek[przedmiot]
 
         print("Sprzedano przedmiot!")
@@ -87,9 +91,9 @@ def sklep(ekwipunek):
         zakup = input("\nWybierz przedmiot: ")
 
         if zakup == "1":
-            kup_przedmiot(ekwipunek, "miecz", 20)
+            kup_przedmiot(ekwipunek, "miecz", 20, 7)
         elif zakup == "2":
-            kup_przedmiot(ekwipunek, "mikstura", 5)
+            kup_przedmiot(ekwipunek, "mikstura", 5, 2)
         else:
             print("Nie ma takiej opcji!")
 
@@ -111,10 +115,14 @@ def uzyj_przedmiot(ekwipunek):
     if przedmiot is None:
         return
 
-    if przedmiot in ekwipunek:
-        ekwipunek[przedmiot] -= 1
+    if przedmiot == "zloto":
+        print("Nie możesz użyć złota!")
+        return
 
-        if ekwipunek[przedmiot] == 0:
+    if przedmiot in ekwipunek:
+        ekwipunek[przedmiot]["ilosc"] -= 1
+
+        if ekwipunek[przedmiot]["ilosc"] == 0:
             del ekwipunek[przedmiot]
 
         print("Użyto przedmiotu!")
@@ -130,8 +138,10 @@ def sprawdz_przedmiot(ekwipunek):
     if przedmiot is None:
         return
 
-    if przedmiot in ekwipunek:
-        print(f"{przedmiot} - ilość: {ekwipunek[przedmiot]}")
+    if przedmiot == "zloto":
+        print(f"Złoto - ilość: {ekwipunek.get('zloto', 0)}")
+    elif przedmiot in ekwipunek:
+        print(f"{przedmiot} - ilość: {ekwipunek[przedmiot]['ilosc']}")
     else:
         print(f"\nNie masz {przedmiot} w ekwipunku.")
 
